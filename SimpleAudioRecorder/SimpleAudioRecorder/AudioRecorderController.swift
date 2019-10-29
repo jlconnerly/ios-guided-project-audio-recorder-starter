@@ -89,6 +89,9 @@ extension AudioRecorderController: RecorderDelegate {
 		// TODO: Play the file
 		if let url = recorder.url, recorder.isRecording == false {
 			// Recording is finished, let's try and play the file
+			
+			player = Player(url: url)
+			player.delegate = self
 		}
 	}
 }

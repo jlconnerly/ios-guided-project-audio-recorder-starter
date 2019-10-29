@@ -18,17 +18,16 @@ class Player: NSObject {
 	
 	var audioPlayer: AVAudioPlayer?
 	var delegate: PlayerDelegate?
+	var url: URL
 	
-	// init
-	
-	override init() {
-		let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
+	init(url: URL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!) {
+		self.url = url
 		
 		// create an audio player
 		do {
-			audioPlayer = try AVAudioPlayer(contentsOf: songURL)
+			audioPlayer = try AVAudioPlayer(contentsOf: url)
 		} catch {
-			print("AudioPlayer Error: \(songURL)")
+			print("AudioPlayer Error: \(url)")
 		}
 		
 		super.init()
