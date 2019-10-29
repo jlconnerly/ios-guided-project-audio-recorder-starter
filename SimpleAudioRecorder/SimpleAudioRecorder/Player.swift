@@ -8,10 +8,16 @@
 
 import AVFoundation
 
+protocol PlayerDelegate {
+	func playerDidChangeState(player: Player)
+}
+
+
 // AVAudioPlayerDelegate requires a NSObject subclass
 class Player: NSObject {
 	
 	var audioPlayer: AVAudioPlayer?
+	var delegate: PlayerDelegate?
 	
 	// init
 	
@@ -26,6 +32,8 @@ class Player: NSObject {
 		}
 		
 		super.init()
+		
+		audioPlayer?.delegate = self
 	}
 	
 	// isPlaying
@@ -55,8 +63,21 @@ class Player: NSObject {
 		
 		// Option 3: Optional chaining
 		audioPlayer?.play()		 // if nil, this is a no-op (no operation: i.e.: nothing happens)
+		delegate?.playerDidChangeState(player: self)
 	}
 	
+	func pause() {
+		audioPlayer?.pause()
+		delegate?.playerDidChangeState(player: self)
+	}
+	
+	func playPause() {
+		if isPlaying {
+			pause()
+		} else {
+			play()
+		}
+	}
 	
 	// seekToPosition: Double
 
@@ -65,4 +86,13 @@ class Player: NSObject {
 	
 }
 
-
+extension Player: AVAudioPlayerDelegate {
+	func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+		print("AVAudioError: \(String(describing: error))")
+	}
+	
+	func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+		// send delegate message to update the UI
+		delegate?.playerDidChangeState(player: self)
+	}
+}
