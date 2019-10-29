@@ -50,6 +50,8 @@ class AudioRecorderController: UIViewController {
                                                           weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
                                                                    weight: .regular)
+		
+		updateViews()
 	}
 
 
@@ -67,6 +69,13 @@ class AudioRecorderController: UIViewController {
 		
 		let recordTitle = recorder.isRecording ? "Stop Recording" : "Record"
 		recordButton.setTitle(recordTitle, for: .normal)
+		
+		timeLabel.text = timeFormatter.string(from: player.timeElapsed)
+		timeRemainingLabel.text = timeFormatter.string(from: player.timeRemaining)
+		
+		timeSlider.minimumValue = 0
+		timeSlider.maximumValue = Float(player.duration)
+		timeSlider.value = Float(player.timeElapsed)
 	}
 }
 
