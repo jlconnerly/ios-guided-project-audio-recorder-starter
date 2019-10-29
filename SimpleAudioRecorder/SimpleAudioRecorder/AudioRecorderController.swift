@@ -39,6 +39,7 @@ class AudioRecorderController: UIViewController {
 		super.init(coder: coder)
 
 		player.delegate = self
+		recorder.delegate = self
 	}
 		
 	override func viewDidLoad() {
@@ -61,8 +62,11 @@ class AudioRecorderController: UIViewController {
     }
 	
 	private func updateViews() {
-		let title = player.isPlaying ? "Pause" : "Play"
-		playButton.setTitle(title, for: .normal)
+		let playTitle = player.isPlaying ? "Pause" : "Play"
+		playButton.setTitle(playTitle, for: .normal)
+		
+		let recordTitle = recorder.isRecording ? "Stop Recording" : "Record"
+		recordButton.setTitle(recordTitle, for: .normal)
 	}
 }
 
@@ -71,5 +75,20 @@ extension AudioRecorderController: PlayerDelegate {
 		// update the UI
 		
 		updateViews()
+	}
+}
+
+extension AudioRecorderController: RecorderDelegate {
+	func recorderDidChangeState(recorder: Recorder) {
+		updateViews()
+	}
+	
+	func recorderDidSaveFile(recorder: Recorder) {
+		updateViews()
+		
+		// TODO: Play the file
+		if let url = recorder.url, recorder.isRecording == false {
+			// Recording is finished, let's try and play the file
+		}
 	}
 }

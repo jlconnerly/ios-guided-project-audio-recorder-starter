@@ -9,12 +9,18 @@
 import AVFoundation
 
 protocol RecorderDelegate {
-	
+	func recorderDidChangeState(recorder: Recorder)
+	func recorderDidSaveFile(recorder: Recorder)
 }
 
 class Recorder: NSObject {
 	
 	var audioRecorder: AVAudioRecorder?
+	var delegate: RecorderDelegate?
+	
+	var url: URL? {
+		audioRecorder?.url
+	}
 	
 	var isRecording: Bool {
 		audioRecorder?.isRecording ?? false
@@ -38,15 +44,18 @@ class Recorder: NSObject {
 		do {
 			print("record: \(file.path)")
 			audioRecorder = try AVAudioRecorder(url: file, format: format)
+			audioRecorder?.delegate = self
 		} catch {
 			print("AVAudioRecorder Error: \(error)")
 		}
 		
 		audioRecorder?.record()
+		delegate?.recorderDidChangeState(recorder: self)
 	}
 	
 	func stop() {
 		audioRecorder?.stop()
+		delegate?.recorderDidChangeState(recorder: self)
 	}
 	
 	func toggleRecording() {
@@ -55,5 +64,18 @@ class Recorder: NSObject {
 		} else {
 			record()
 		}
+	}
+}
+
+extension Recorder: AVAudioRecorderDelegate {
+	func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+		if let error = error {
+			print("AVAudioRecorder Error: \(error)")
+		}
+	}
+	
+	func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+		
+		delegate?.recorderDidSaveFile(recorder: self)
 	}
 }
