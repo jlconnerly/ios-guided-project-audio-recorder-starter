@@ -9,6 +9,8 @@
 import UIKit
 
 class AudioRecorderController: UIViewController {
+	
+	var player: Player
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -26,6 +28,13 @@ class AudioRecorderController: UIViewController {
 		return formatting
 	}()
 	
+	required init?(coder: NSCoder) {
+		print("init(coder)")
+		player = Player()
+		
+		super.init(coder: coder)
+	}
+		
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
