@@ -9,6 +9,9 @@
 import UIKit
 
 class AudioRecorderController: UIViewController {
+	
+	var player: Player
+	var recorder: Recorder
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -26,6 +29,19 @@ class AudioRecorderController: UIViewController {
 		return formatting
 	}()
 	
+	// Gets called when a ViewController is created
+	// from storyboard
+	required init?(coder: NSCoder) {
+		print("init(coder)")
+		player = Player()
+		recorder = Recorder()
+		
+		super.init(coder: coder)
+
+		player.delegate = self
+		recorder.delegate = self
+	}
+		
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -34,15 +50,57 @@ class AudioRecorderController: UIViewController {
                                                           weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
                                                                    weight: .regular)
+		
+		updateViews()
 	}
 
 
     @IBAction func playButtonPressed(_ sender: Any) {
-
+		player.playPause()
 	}
     
     @IBAction func recordButtonPressed(_ sender: Any) {
-    
+		recorder.toggleRecording()
     }
+	
+	private func updateViews() {
+		let playTitle = player.isPlaying ? "Pause" : "Play"
+		playButton.setTitle(playTitle, for: .normal)
+		
+		let recordTitle = recorder.isRecording ? "Stop Recording" : "Record"
+		recordButton.setTitle(recordTitle, for: .normal)
+		
+		timeLabel.text = timeFormatter.string(from: player.timeElapsed)
+		timeRemainingLabel.text = timeFormatter.string(from: player.timeRemaining)
+		
+		timeSlider.minimumValue = 0
+		timeSlider.maximumValue = Float(player.duration)
+		timeSlider.value = Float(player.timeElapsed)
+	}
 }
 
+extension AudioRecorderController: PlayerDelegate {
+	func playerDidChangeState(player: Player) {
+		// update the UI
+		
+		updateViews()
+	}
+}
+
+extension AudioRecorderController: RecorderDelegate {
+	func recorderDidChangeState(recorder: Recorder) {
+		updateViews()
+	}
+	
+	func recorderDidSaveFile(recorder: Recorder) {
+		updateViews()
+		
+		// TODO: Play the file
+		if let url = recorder.url, recorder.isRecording == false {
+			// Recording is finished, let's try and play the file
+			
+			player = Player(url: url)
+			player.delegate = self
+		}
+	}
+}
