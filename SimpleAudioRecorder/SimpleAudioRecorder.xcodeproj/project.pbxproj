@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD0D58EE2368A04100BADD8F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D58ED2368A04100BADD8F /* Player.swift */; };
+		BD0D58F02368A04B00BADD8F /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D58EF2368A04B00BADD8F /* Recorder.swift */; };
 		BD8D4B6A2343EB1D001432F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8D4B692343EB1D001432F7 /* AppDelegate.swift */; };
 		BD8D4B6C2343EB1D001432F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8D4B6B2343EB1D001432F7 /* SceneDelegate.swift */; };
 		BD8D4B732343EB1E001432F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD8D4B722343EB1E001432F7 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BD0D58ED2368A04100BADD8F /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		BD0D58EF2368A04B00BADD8F /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		BD8D4B662343EB1D001432F7 /* SimpleAudioRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleAudioRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD8D4B692343EB1D001432F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD8D4B6B2343EB1D001432F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 				BD8D4B692343EB1D001432F7 /* AppDelegate.swift */,
 				BD8D4B6B2343EB1D001432F7 /* SceneDelegate.swift */,
 				BD8D4B7E2343EB38001432F7 /* AudioRecorderController.swift */,
+				BD0D58ED2368A04100BADD8F /* Player.swift */,
+				BD0D58EF2368A04B00BADD8F /* Recorder.swift */,
 				BD8D4B7D2343EB38001432F7 /* Main.storyboard */,
 				BD8D4B722343EB1E001432F7 /* Assets.xcassets */,
 				BD8D4BA52343ECF5001432F7 /* piano.mp3 */,
@@ -142,6 +148,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD0D58F02368A04B00BADD8F /* Recorder.swift in Sources */,
+				BD0D58EE2368A04100BADD8F /* Player.swift in Sources */,
 				BD8D4B6A2343EB1D001432F7 /* AppDelegate.swift in Sources */,
 				BD8D4B802343EB38001432F7 /* AudioRecorderController.swift in Sources */,
 				BD8D4B6C2343EB1D001432F7 /* SceneDelegate.swift in Sources */,
