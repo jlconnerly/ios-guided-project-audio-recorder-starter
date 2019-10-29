@@ -14,11 +14,6 @@ class Player: NSObject {
 	var audioPlayer: AVAudioPlayer?
 	
 	// init
-	// isPlaying
-	// play
-	// pause
-	// playPause
-	// seekToPosition: Double
 	
 	override init() {
 		let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
@@ -32,6 +27,40 @@ class Player: NSObject {
 		
 		super.init()
 	}
+	
+	// isPlaying
+	// play
+	// pause
+	// playPause
+	
+	var isPlaying: Bool {
+		return audioPlayer?.isPlaying ?? false
+	}
+	
+	func play() {
+		// Option 1
+//		if let audioPlayer = audioPlayer {
+//			audioPlayer.play()
+			// do other work here
+//		}
+		
+		// Option 2
+//		guard let audioPlayer = audioPlayer else {
+//			print("Error: no player")
+//			return
+//		}
+//
+//		audioPlayer.play()
+//      analytics.record("play")
+		
+		// Option 3: Optional chaining
+		audioPlayer?.play()		 // if nil, this is a no-op (no operation: i.e.: nothing happens)
+	}
+	
+	
+	// seekToPosition: Double
+
+	
 	
 	
 }
